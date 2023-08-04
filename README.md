@@ -1,2 +1,2 @@
-# KatanaZeroProject
-3WeekUnityProtect
+# KatanaZero
+KatanaZero Copy
