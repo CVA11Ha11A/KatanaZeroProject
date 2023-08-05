@@ -7542,12 +7542,12 @@ GameObject:
   - component: {fileID: 502332847}
   - component: {fileID: 502332848}
   m_Layer: 0
-  m_Name: Collider008
+  m_Name: Collider008(LEGACY)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &502332847
 Transform:
   m_ObjectHideFlags: 0
@@ -7614,7 +7614,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508367562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 67.23, y: 10.07, z: 0}
+  m_LocalPosition: {x: 67.23, y: 2.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7645,7 +7645,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10, y: 0.2}
+  m_Size: {x: 9.88, y: 15}
   m_EdgeRadius: 0
 --- !u!1 &626828577
 GameObject:
@@ -7932,7 +7932,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 1}
+  m_Size: {x: 19.84, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &788548732
 GameObject:
@@ -18592,7 +18592,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.34, y: 7}
+  m_Size: {x: 0.34, y: 6.79}
   m_EdgeRadius: 0
 --- !u!1 &1371135545
 GameObject:
@@ -18810,7 +18810,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430421737}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 35.26, y: 0.58, z: 0}
+  m_LocalPosition: {x: 35.26, y: 0.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18841,7 +18841,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.7, y: 0.2}
+  m_Size: {x: 5.97, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &1510313142
 GameObject:
@@ -26987,12 +26987,12 @@ GameObject:
   - component: {fileID: 1845326168}
   - component: {fileID: 1845326169}
   m_Layer: 0
-  m_Name: Collider013
+  m_Name: Collider013(Collider12Marge)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1845326168
 Transform:
   m_ObjectHideFlags: 0
@@ -27045,12 +27045,12 @@ GameObject:
   - component: {fileID: 1846532904}
   - component: {fileID: 1846532905}
   m_Layer: 0
-  m_Name: Collider007
+  m_Name: Collider007(LEGACY)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1846532904
 Transform:
   m_ObjectHideFlags: 0
@@ -27246,8 +27246,9 @@ GameObject:
   - component: {fileID: 1897071871}
   - component: {fileID: 1897071875}
   - component: {fileID: 1897071874}
-  - component: {fileID: 1897071873}
   - component: {fileID: 1897071876}
+  - component: {fileID: 1897071873}
+  - component: {fileID: 1897071877}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -27352,7 +27353,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: cbd82d25f228df445836463636d01fa3, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -27404,6 +27405,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.55, y: 1.1}
   m_EdgeRadius: 0
+--- !u!114 &1897071877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897071870}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92391486c6c51454a92452192960f35e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostDelay: 0
+  ghost: {fileID: 8565004085503407693, guid: 0b6486e2f9c6c0d44ad4913c6c6444d7, type: 3}
+  isGhostMake: 0
 --- !u!1 &1975568782
 GameObject:
   m_ObjectHideFlags: 0
@@ -27415,12 +27431,12 @@ GameObject:
   - component: {fileID: 1975568784}
   - component: {fileID: 1975568783}
   m_Layer: 0
-  m_Name: Collider011
+  m_Name: Collider011(Collider12Marge)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1975568783
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -27445,7 +27461,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 1.8}
+  m_Size: {x: 0.2, y: 1.7}
   m_EdgeRadius: 0
 --- !u!4 &1975568784
 Transform:
@@ -27455,7 +27471,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975568782}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 62.25, y: 9.29, z: -0.14868054}
+  m_LocalPosition: {x: 62.28, y: 9.29, z: -0.14868054}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
