@@ -43,8 +43,32 @@ AddForce 연속적으로 줄때에 이동하는 힘이 가중되는것 해결해
 
 
 
+오후 9:51 2023-08-06
 
+공격 애니메이션을 어떻게 해야할지 고민하다가 Bool을 코루틴으로 시간을 정해주고 True false를
+조정 해서 사용하면 어떨까 싶어서 시도시작
 
+코루틴 
+
+    private Coroutine leftAttackCoroutine;    // 코루틴 캐싱
+
+    // 아래 fixedUpdate는 0.02초 주기이기에 계산 잘해야할거같음
+    private WaitForFixedUpdate fixedUpdate = new WaitForFixedUpdate(); // yield return fixedUpdate캐싱
+    private WaitForSeconds waitSecond = new WaitForSeconds(0.3f);
+
+이런식으로 캐싱했고
+
+leftAttackCoroutine = StartCoroutine(LeftClickAttack()); 이런방식으로 사용했음
+
+근데 이게 맞는 방식인지 확신이 서질 않음 30분 이상 검색 해보았지만 내가 이해하긴엔
+너무 심연이였기에 일단 사용해보니 기능은 정상작동하는것으로 확인
+
+오후 10:51 2023-08-06
+애니메이션 확인해보니 Any State 에 Jump 와 Attack 이 있는데 Any State 의 우선순위가 너무
+높아서 여기서 다른곳으로 이어도 계속 플레이 되는것을 확인 나중에 AnimatorComtroler수정 필요
+
+오후 10:59 2023-08-06
+이동하면서 공격하면 AddForce가 주는힘이 씹히면서 이동속도에 맞춰짐 이 부분 고쳐야할거같음
 
 
 
