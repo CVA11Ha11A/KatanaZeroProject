@@ -30,12 +30,12 @@ public class Ghost : MonoBehaviour
             else
             {
                 GameObject currentGhost = Instantiate(ghost, transform.position, transform.rotation);
-                currentGhost.transform.localScale = this.transform.localScale;
+                currentGhost.transform.localScale = transform.localScale;
                 Sprite currentSprite = GetComponent<SpriteRenderer>().sprite;
                 currentGhost.GetComponent<SpriteRenderer>().sprite = currentSprite;
 
                 ghostDelaySeconds = ghostDelay;
-                Destroy(currentGhost, 0.4f);
+                Destroy(currentGhost, 0.15f);
             }
         }
     }

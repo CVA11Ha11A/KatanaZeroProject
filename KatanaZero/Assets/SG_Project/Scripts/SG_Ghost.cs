@@ -35,7 +35,7 @@ public class SG_Ghost : MonoBehaviour
                 currentGhost.GetComponent<SpriteRenderer>().sprite = currentSprite;
 
                 ghostDelaySeconds = ghostDelay;
-                Destroy(currentGhost, 0.4f);
+                Destroy(currentGhost, 0.2f);
             }
         }
     }

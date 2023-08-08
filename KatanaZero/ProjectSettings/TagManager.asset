@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
+  - Enemy
+  - SG_ClingWall
   layers:
   - Default
   - TransparentFX
@@ -69,8 +71,14 @@ TagManager:
   - name: MapObj
     uniqueID: 1169014503
     locked: 0
-  - name: Player
+  - name: SG_Enemy
+    uniqueID: 127074611
+    locked: 0
+  - name: SG_Player
     uniqueID: 2336811721
+    locked: 0
+  - name: PlayerAttackEmpect
+    uniqueID: 3133373081
     locked: 0
   - name: ForeGround
     uniqueID: 2399693279
