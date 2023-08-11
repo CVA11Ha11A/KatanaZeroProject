@@ -300,23 +300,229 @@ player와 wall의 X좌표를 구분해서 RightWall,LeftWall에 구분해주었�
 (공격할때에 Gravity 1로 주면고쳐질 것으로 예상됨)
 
 
+오전 11:25 2023-08-09
+
+벽에 붙었을때 공격하면 중력유지한체로 공격하는것 고치기 
+ 공격할떄에 Gravity가 1보다 낮으면 1로 올리라고 하니까 고쳐짐 하지만 점프가 공격이후
+점프가 안됨
+
+벽점프할때에 2단점프 되는것 고침
+
+
+오후 1:28 2023-08-09
+애니메이터 조금 고쳐야할거같음
+
+1 벽을 짚음
+
+점프키 눌렀는가? 
+
+Yes : -> 2벽점프 애니메이션
+
+No : -> 1계속 벽짚기
+
+1 에서 땅에 닿았나?
+
+Yes : Idle 애니메이션
+
+No : 벽짚기
+
+2 벽점프 애니메이션을 실행후 땅에 닿았나?
+
+Yes : Idle애니메이션
+
+No : 모션 그대로 
+
+WallGrab모션중 공격을 하면 공격이나가고 WallGrab모션으로 돌아옴
+
+예상 : WallGrab에서 Attack으로 갔지만 남아있던 Collider인식이 다시 WallGrab으로 부른걸로
+	추정
+
+
+Debug 찍어봐야 하는데 그럼 벽에 붙어 있을떄에 와 공격할떄 한번씩 찍어보고
+	예상이맞으면 1붙어있음 -> 2공격함 -> 1붙어있음 으로 나와야함
+
+
+예상이 맞았고 코루틴으로 공격시 몇초동안 값을 변하지 못하게 하던지 코루틴으로만
+값을 변화시켜서 조절해야 할거같음
+
+완료 : 벽에 붙어있을때 Bool 형 변수 isAttackClingWallCoolTimeBool == false일때로하고
+	공격했을떄 좌클릭했을떄 발생하는 함수에 코루틴으로 0.3초후 다시 붙을수 있게
+	해주었더니 정상적으로됨 하지만 생각해보니 코루틴을 너무 남용하면 GC이 불필요
+	하게 많이 쌓일수 있기에 if 조건문으로  isWallGrab == true 조건을 주었음
+	isWallGrab이라는 Bool 변수는 벽에 붙었을때 true로 바뀌기 때문에 바닥에서
+	공격할시엔 코루틴을 돌지 않도록함
+
+
+오후 3:53 2023-08-09
+
+이제 벽에서 땅을 밟았을때나 붙는 벽에서 다른 키를 눌렀을때 벽에계속 붙어있는 애니메이션
+이 나오는데 이것을 위 방법처럼 다른키를 누르면 0.3초의 쿨을 주면 될거같음
+
+if(isWallGrab == true && (player.GetButtonDown("MoveLeft") ||
+ player.GetButtonDown("MoveRight") || player.GetButtonDown("DownKey")))
+
+위 조건으로 해보았는데 Stay가 계속 올라가서 그런지 떨어져도 똑같은거 같음 어떻게 해결해야
+할까
+
+Floor 땅일때에 Bool값을 바꿔주는 무언가를 만들어서 벽에 붙는 조건에 땅에 붙지 않았을때를
+넣어주면 될거같음
+
+
+바닥에서 나갈때부터하면됨
+playerPresentFloor = true;
+
+오후 4:32 2023-08-09
+
+playerPresentFloor = false; 를 CollitionExit 에 넣으니까 늦게 false가 되는것인지
+ 점프해서 붙는벽에 닿았을때에 애니메이터가 점프에서 Idle로 가버림
+
+
+디버그 : exit에서 false로 바꾸어주는 타이밍 붙는벽 enter 타이밍 확인 해보아야할거같음
+
+디버그 결과 : 예상과 다르게 false 된 이후에 Enter 정상적으로 들어감 그렇다면 Ani.SetTriger로
+켜주는 곳이 다른곳에 있는데 그 조건에 들어가질 못하나?
+
+디버그 찍어보니 조건에 맞았고 잘 들어감
+
+근데 공격한뒤에 벽에 붙으면 잘되는것을 확인할수 있었는데 그럼 공격할떄에 변수랑
+그냥 점프해서 붙었을떄 변수의 차이를 확인하고 고쳐야 할거같음
+
+
+오후 6:08 2023-08-09
+1시간 교수님과 문제점을 유심히 본결과
+
+fix: 벽에 잘붙음 Debug.LogFormat으로 찍어보았지만 문제가 발견되지 않았고 
+애니메이터 에서 Jump -> Idle로 가는것 , WallGrab -> Idle로 가는 2가지를 끊었다가
+다시 붙여보니 정상작동으로 되었음 문제점을 찾기 너무어려웠고
+추후 재발할 가능성이 충분하게 보이기때문에 경과를 잘 지켜보아야 겠음
 
 
 
 
+오전 9:48 2023-08-10
+WallGrab상태에서 어느 순간에 WallGrabToIdle을 부르는지 확인해야됨
 
 
+오후 1:23 2023-08-10
+
+현재 LaserPassage 맵 타일깔았음 총 맵의X길이 61정도 Max X Pos : 52 Min X Pos : -8.9
+
+LaserPassage 카메라 Min Position X : 6 	Y : 1.5
+		  Max Positon X : 43.5	Y : 1.5
+
+오후 1:38 2023-08-10
+씬이름을 가져와서 그 이름에 따라 카메라의 움직임 제한을 각자 다르게 줌
+
+private Scene nowScene;
+
+오후 2:32 2023-08-10
+맵 장애물Obj 레이저 쏘는 기믹 만들기
+
+(1) 기믹의 스프라이트는 있지만 레이저 점선의 스프라이트와 공격시 스프라이트가 없기 때문에
+직접 제작
+
+(2) 움직일수 있는 기믹과 움직이지 못하는 기믹구분은 점선 색으로 구분 
+
+(3) Collition.tag 가 Player면 공격
+
+1-2 플레이어를 감지 하였을떄에 나오는 파 노 파 노 색갈 순으로 레이저 쏘기
+
+노란색 RGB 255,180,0  	FFB400
+하늘색 RGB 40,130,220 	2882DC
 
 
+오후 6:01 2023-08-10
+
+현재 레이저 로직 구성중
+
+컬러 캐싱완료
+
+줄어드는 스케일 캐싱 완료
+
+Active == True 일때 실행 시킬 코루틴 구성 중 완료
+
+레이저 Default 사이즈 캐싱해야됨 완료
+
+플레이어 Trigger 조건 제작 해야됨
+
+오전 10:49 2023-08-11
+레이저 움직이게 해야함 그걸 2개로 스크립트를 나누었음 이동 만 하게 하는것과
+콜라이더 인식해주는 스크립트로 나눔
+
+두개 나누어 두었었는데 둘이 합쳤고 한캐의 스크립트로 가능하게 만들었음 코드 길이가
+크게 많지않아서 합쳤고 나중에 다른 곳에서 끌어다 쓸때에도 더욱 편리성이 생김
+
+오후 12:09 2023-08-11
+스위치 OnOFF조정을 TriggerStay에서 하니까 겹쳤을때20번정도 빨리돌고 더 안돔 그래서
+범위 안에 있는동안 꽤나 많이 씹히는데 이렇게 되면
+
+변수하나 만들어주고 그 면수를 Enter와 Exit 에서 바꾸고 그 변수값이 Enter 값일때 바꿀수
+있게 만들어야 할거같음
 
 
+오후 3:21 2023-08-11
+
+   // 다른클레스에서 알아야하는 bool을 매개변수로 받는 이벤트선언
+    public event Action<bool> switchButtionboolChanged;
+
+    // 실질적 스위치 On,Off 구문해줄 bool
+    private bool isSwitchOn = true;
+
+    // 스위치 바꿀떄 잠시만 true로 해서 과도한 이벤트 발생 안시키기위한 bool 변수
+    public bool isTouchButton = false;
+
+    public bool IsSwitchOn
+    {
+        
+        get { Debug.Log("get에 들어가나?"); return isSwitchOn; }
+        set
+        {
+            Debug.Log("Set에 들어가나?");
+            if (isSwitchOn != value && isTouchButton) // && isTouchButton == true && switchControlNum == 1
+            {
+                Debug.Log("이벤트에 들어오나?");
+                isSwitchOn = value;
+                // 이벤트 호출 및 매개변수 전달
+                switchButtionboolChanged?.Invoke(isSwitchOn);
+            }
+            else { /*PASS*/ }
+        }
+    }
+
+---------------------------------------------------------------------------------
+
+                //  { 스페이스 입력하면 스위치 온,오프 조정
+                if (IsSwitchOn == true)
+                {
+                    switchSpriteRenderer.sprite = switchSprite[0];
+                    IsSwitchOn = false;
+                    touchButton = StartCoroutine(ChangeTouchSwitch());
+
+                }
+
+이런 식으로 불러주면 if(문에선 isSwitchOn 의 값을 불러와서 비교하고)
+
+IsSwitchOn = false;
+
+이런식으로 대입 할때에는 Set 을 불러오기 떄문에
+Set의
+
+ isSwitchOn = value; 이 부분이 대입되어서 같이 변경되는걸로 됨
 
 
+이렇게 만들었는데 비교문일때 Get을 부르고 대입 문에선 Set 을 부른다.
 
+오류가 있었는데 그부분이 만들어놓고 이벤트 구독까지 했지만 참조를 안했었기 떄문에
+아예 불러오질 못했음 이방식을 사용할때에 Get과 Set이 어느 시점에서 Call 되는것인지
+인지를 잘해야 사용 가능할것으로 예상됨
 
+오후 5:41 2023-08-11
 
+스위치로 레이저는 잘꺼지게 되었지만 player를 인식했을때에 Dotted_Line을 끄고 Shot 하고
+다시키는것에 오류가 생김 DottedLine이 스위치를 끄기 전까지 안꺼지고 켜진상태에서
+레이저를 쏘게됨
 
-
+문제를 보니 DottedLine이 SetActive 가 절대적으로 True가 됨 꺼지지 않음
 
 
 

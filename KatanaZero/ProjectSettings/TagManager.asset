@@ -7,6 +7,9 @@ TagManager:
   - Floor
   - Enemy
   - SG_ClingWall
+  - SG_Laser
+  - SG_Switch
+  - SG_TriggerLaser
   layers:
   - Default
   - TransparentFX
@@ -68,8 +71,14 @@ TagManager:
   - name: FrontTileMap
     uniqueID: 2077028029
     locked: 0
+  - name: BackMapObj
+    uniqueID: 943437131
+    locked: 0
   - name: MapObj
     uniqueID: 1169014503
+    locked: 0
+  - name: FrontMapObj
+    uniqueID: 49833767
     locked: 0
   - name: SG_Enemy
     uniqueID: 127074611

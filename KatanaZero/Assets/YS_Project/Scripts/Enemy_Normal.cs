@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static PlayerMove;
 
 public class Enemy_Normal : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class Enemy_Normal : MonoBehaviour
     private bool isGoRight;
     private bool isDie = false;
     private bool isGround;
+    private bool isChasing=false;
+
     BoxCollider2D enemyBoxCollider;
     Animator enemyAni;
     public GameObject target;
@@ -38,7 +42,8 @@ public class Enemy_Normal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isDie==true&&isGround)
+        //Physics2D.Raycast(wallCheck.position, Vector2.right * playerScale, wallCheckDis, wall_mask);
+        if (isDie==true&&isGround)
         {
             enemyRigid.velocity = Vector3.zero;
             enemyRigid.gravityScale = 0;
@@ -48,7 +53,7 @@ public class Enemy_Normal : MonoBehaviour
         {
             return;
         }
-        //Debug.LogFormat("isplayerIn{0}", isPlayerIn);
+       // Debug.LogFormat("isplayerIn [{0}]", isPlayerIn);
         if (isPlayerIn == true)
         {
             StopCoroutine(MoveAround());
@@ -66,6 +71,8 @@ public class Enemy_Normal : MonoBehaviour
 
                 enemyRigid.velocity = moveRight;
             }
+            isChasing = true;
+            return;
         }
         else
         {
@@ -83,6 +90,10 @@ public class Enemy_Normal : MonoBehaviour
                 }
             }
         }
+        if(isChasing)
+        {
+
+        }
     }
 
     public void Die()
@@ -96,6 +107,11 @@ public class Enemy_Normal : MonoBehaviour
         if (collision.collider.tag.Equals("Floor"))
         {
             isGround = true;
+        }
+        if(collision.collider.tag.Equals("Platform"))
+        {
+            isGround = true;
+
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
@@ -114,16 +130,16 @@ public class Enemy_Normal : MonoBehaviour
             target = collision.gameObject;
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
 
-        StartCoroutine(PlayerMissing());
-    }
-    private IEnumerator PlayerMissing()
-    {
-        yield return missingPlayer;
-        isPlayerIn = false;
-    }
+    //    StartCoroutine(PlayerMissing());
+    //}
+    //private IEnumerator PlayerMissing()
+    //{
+    //    yield return missingPlayer;
+    //    isPlayerIn = false;
+    //}
 
     //private IEnumerator MoveAround()
     //{
