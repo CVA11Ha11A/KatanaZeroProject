@@ -9,7 +9,7 @@ public class SG_LaserSwitch : MonoBehaviour
     public GameObject laserLine;
     
 
-    private bool isSwitchBottonOn = true;
+    private bool isSwitchBottonOn;
     
 
     
@@ -30,7 +30,7 @@ public class SG_LaserSwitch : MonoBehaviour
     
     void Update()
     {
-        ChildObjControl();
+       ChildObjControl();
     }
 
     public void IsChangedBool(bool buttonSwitch)
