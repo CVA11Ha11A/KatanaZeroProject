@@ -24,8 +24,11 @@ public class EnemyRay : MonoBehaviour
     private float intTimer;
     private bool onPlatform;
     private bool onStair;
+    private bool isDie=false;
+    private bool isGrounded;
     EnemyPlatformPass platformPass;
     Rigidbody2D enemyRigid;
+    BoxCollider2D enemyCollider;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,6 +39,7 @@ public class EnemyRay : MonoBehaviour
         anim = GetComponent<Animator>();
         platformPass = GetComponent<EnemyPlatformPass>();
         enemyRigid = GetComponent<Rigidbody2D>();
+        enemyCollider = GetComponent<BoxCollider2D>();
 
 
     }
@@ -43,6 +47,10 @@ public class EnemyRay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isDie)
+        {
+            return;
+        }
        if(!attackMode)
         {
             Move();
@@ -100,6 +108,11 @@ public class EnemyRay : MonoBehaviour
         }
         if (collision.gameObject.tag == "Player")
         {
+            if(isDie)
+            {
+                target = null;
+                return;
+            }
             if(!onStair)
             {
             target = collision.transform;
@@ -124,6 +137,10 @@ public class EnemyRay : MonoBehaviour
         {
             onStair = true;
         }
+        if(collision.collider.tag.Equals("Floor")|| collision.collider.tag.Equals("Platform"))
+        {
+            isGrounded = true;
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -135,7 +152,10 @@ public class EnemyRay : MonoBehaviour
         {
             onStair = false;
         }
-
+        if (collision.collider.tag.Equals("Floor") || collision.collider.tag.Equals("Platform"))
+        {
+            isGrounded = false;
+        }
     }
 
     void EnemyLogic()
@@ -227,6 +247,10 @@ public class EnemyRay : MonoBehaviour
     }
    public void Flip()
     {
+        if(target==null)
+        {
+            return;
+        }
         Vector3 rotation = transform.eulerAngles;
         if(transform.position.x>target.position.x)
         {
@@ -241,6 +265,19 @@ public class EnemyRay : MonoBehaviour
 
     public void Die()
     {
+        anim.Play("Grunt_Die_Ground");
+        isDie = true;
+        if(isGrounded)
+        {
+        StartCoroutine(DieRoutine());
 
+        }
+    }
+    private IEnumerator DieRoutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+        enemyRigid.velocity = Vector3.zero;
+        enemyRigid.gravityScale = 0;
+        enemyCollider.enabled = false;
     }
 }

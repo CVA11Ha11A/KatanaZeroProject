@@ -90,7 +90,7 @@ public class SG_ShotLaserControler : MonoBehaviour
             }
             else { /*PASS*/ }
 
-            player.isPlayerDie = true;
+     
 
         }
     }

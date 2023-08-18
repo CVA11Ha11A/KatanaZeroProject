@@ -19,7 +19,17 @@ public class DoorAttack : MonoBehaviour
     {
         if(collision.tag.Equals("Enemy"))
         {
-            collision.GetComponent<Enemy_Normal>().Die();
+            EnemyRay enemyGrunt = collision.GetComponent<EnemyRay>();
+            if(enemyGrunt!=null)
+            {
+                enemyGrunt.Die();
+            }
+            Enemy_Gunner enemyGunner = collision.GetComponent<Enemy_Gunner>();
+                if(enemyGunner!=null)
+            {
+                enemyGunner.Die();
+            }
+            
             //Destroy(gameObject);
         }
     }

@@ -6,7 +6,7 @@ using Rewired;
 public class IntroCanvas : MonoBehaviour
 {
     Player player;
-    public static bool isIntroOver = false;
+    public bool isIntroOver = false;
     public GameObject musicUi;
     public GameObject stageUi;
     public GameObject timeManager;

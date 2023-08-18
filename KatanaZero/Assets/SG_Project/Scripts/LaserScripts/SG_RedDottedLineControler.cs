@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -14,7 +15,30 @@ public class SG_RedDottedLineControler : MonoBehaviour
 
     private Switch switchClass;
 
+
     private bool redDottedIsButtonSwitch = true;
+
+    #region StackOverflow
+    //public event Action<bool> redDottedLineBoolEvent;
+
+    //private bool isChangeEventBool = false;
+
+    //public bool IsChangeEventBool
+    //{
+    //    get { return isChangeEventBool; }
+
+    //    set 
+    //    {
+    //        if (isChangeEventBool != value)
+    //        {
+    //            IsChangeEventBool = value;
+    //            redDottedLineBoolEvent?.Invoke(isChangeEventBool);
+    //        }
+    //    }
+    //}
+    #endregion
+
+    //private bool getEventbool = false;
 
     private float onOffDotted = 0f;
     private float dottedSpeed = 2f;
@@ -22,9 +46,9 @@ public class SG_RedDottedLineControler : MonoBehaviour
     
     void Start()
     {
-        switchClass = FindAnyObjectByType<Switch>();
-        switchClass.switchButtionboolChanged += RedDotteLineIsSwitchOn;
+        switchClass = FindAnyObjectByType<Switch>();      
 
+        switchClass.switchButtionboolChanged += RedDotteLineIsSwitchOn;
     }
 
     // Update is called once per frame
@@ -47,8 +71,9 @@ public class SG_RedDottedLineControler : MonoBehaviour
 
     void OnEnable()
     {
-
         // SetActive == true 될 때 수행할 작업
+
+
 
     }
 
@@ -58,6 +83,7 @@ public class SG_RedDottedLineControler : MonoBehaviour
         if (redDottedIsButtonSwitch == true)
         { 
             shotLaser.gameObject.SetActive(true);
+
         }
     }
 
@@ -71,6 +97,7 @@ public class SG_RedDottedLineControler : MonoBehaviour
             if (collision.gameObject.CompareTag("Player"))
             {
                 this.gameObject.SetActive(false);
+         
             }
         }
 
@@ -124,5 +151,7 @@ public class SG_RedDottedLineControler : MonoBehaviour
     {
         redDottedIsButtonSwitch = buttonSwitch;
     }
+
+
 
 }

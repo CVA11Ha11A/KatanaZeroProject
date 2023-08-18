@@ -19,7 +19,7 @@ public class TitleButton : MonoBehaviour
     }
     public void GameStart()
     {
-        SceneManager.LoadScene("Tutorial_Bunker");
+        SceneManager.LoadScene("Tutorial");
     }
     public void QuitGame()
     {

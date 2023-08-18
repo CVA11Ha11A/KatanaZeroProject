@@ -10,6 +10,14 @@ TagManager:
   - SG_Laser
   - SG_Switch
   - SG_TriggerLaser
+  - SG_LaserShot
+  - SG_Fan
+  - Stair
+  - Platform
+  - PlayerAttack
+  - Reflect
+  - SG_Bullet
+  - SG_PlayerAttack
   layers:
   - Default
   - TransparentFX

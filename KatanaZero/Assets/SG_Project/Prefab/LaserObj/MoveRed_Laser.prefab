@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: 6180250113640810783}
   m_Layer: 0
   m_Name: ShotLaser
-  m_TagString: Untagged
+  m_TagString: SG_LaserShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1169,8 +1169,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1169014503
-  m_SortingLayer: 10
+  m_SortingLayerID: 49833767
+  m_SortingLayer: 11
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.26966894, g: 0.40171444, b: 0.5660378, a: 1}

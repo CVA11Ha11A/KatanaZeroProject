@@ -1,3 +1,4 @@
+using Febucci.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,15 +10,19 @@ public class SG_AttackImfact : MonoBehaviour
     public Transform player;
     private Animator empectAni;
     private SG_PlayerMovement playerMovementClass;
+    private BoxCollider2D boxCollider;
 
     private float pitagorasC;
     private float playerZ;
     private float mouseZ;
 
+    private bool endTutorial = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
         //this.gameObject.SetActive(false);
         empectAni = GetComponent<Animator>();
         playerMovementClass = FindObjectOfType<SG_PlayerMovement>();
@@ -27,6 +32,7 @@ public class SG_AttackImfact : MonoBehaviour
     void Update()
     {
         // PlayerIsClick();
+        TutorialOneAttack();
         PlayerIsClick001();
     }
     public void LateUpdate()
@@ -90,6 +96,29 @@ public class SG_AttackImfact : MonoBehaviour
             }
         
 
+    }
+
+    private void TutorialOneAttack()
+    {
+        if(endTutorial == false)
+        {
+            boxCollider.enabled = false;
+            //if(Time.timeScale <= 0.2)
+            //{
+            //    boxCollider.enabled = true;
+            //}
+
+            if (Time.timeScale == 0f && Input.GetMouseButtonDown(0))
+            {                  
+                boxCollider.enabled = true;
+                transform.localScale = new Vector3(-1f,1f,1f);
+                empectAni.Play("SlashAnimaition");
+                endTutorial = true;
+                transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+
+        }
+        
     }
 
 }       // NameSpace
