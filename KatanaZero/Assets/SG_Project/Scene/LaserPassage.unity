@@ -848,10 +848,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4477254304265644334, guid: 52bbb663b684ecd4eae0ca6a8c43d3b8, type: 3}
-    - {fileID: 4477254304217399816, guid: 52bbb663b684ecd4eae0ca6a8c43d3b8, type: 3}
-    - {fileID: 4477254304217399820, guid: 52bbb663b684ecd4eae0ca6a8c43d3b8, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52bbb663b684ecd4eae0ca6a8c43d3b8, type: 3}
 --- !u!4 &90928467 stripped
 Transform:
@@ -7328,59 +7325,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &685355941 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4477254304217400311, guid: 52bbb663b684ecd4eae0ca6a8c43d3b8, type: 3}
-  m_PrefabInstance: {fileID: 90928466}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &685355948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685355941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2e3a95a29ccca5498783b8bf0d2ea19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ghostDelay: 0.01
-  ghost: {fileID: 8565004085503407693, guid: 0b6486e2f9c6c0d44ad4913c6c6444d7, type: 3}
-  isGhostMake: 0
---- !u!114 &685355949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685355941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2dea4cdcff50b4c9f880f904dbdbc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  one: 0
-  moveSpeed: 10
-  jumpForce: 7
-  isPlayerDie: 0
-  playerIsAir: 0
-  isAttacking: 0
-  readyRun: 0
-  leftClickAttackCoolTime: 0
-  isRightMove: 0
-  isLeftMove: 0
-  isDownKeyInput: 0
-  isRollRock: 0
-  isRolling: 0
-  isWallGrab: 0
-  isleftWall: 0
-  isRightWall: 0
-  isDodge: 0
-  attackCount: 0
-  wallGrabCount: 0
-  mousePosition: {x: 0, y: 0, z: 0}
-  leftAttackObj: {fileID: 0}
 --- !u!1 &691169360
 GameObject:
   m_ObjectHideFlags: 0
@@ -8151,6 +8095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  dottedLine: {fileID: 275020725}
 --- !u!65 &760845749
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8808,24 +8753,6 @@ Transform:
   m_Father: {fileID: 1861563047}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &826913220 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4477254304265644332, guid: 52bbb663b684ecd4eae0ca6a8c43d3b8, type: 3}
-  m_PrefabInstance: {fileID: 90928466}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &826913226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 826913220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6e4c6c46883145469ee005fb7c5314c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 90928467}
 --- !u!1 &858729703
 GameObject:
   m_ObjectHideFlags: 0
@@ -9520,6 +9447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  dottedLine: {fileID: 1581938133}
 --- !u!65 &903058378
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9982,6 +9910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  dottedLine: {fileID: 1861563044}
 --- !u!65 &987549503
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10641,6 +10570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  dottedLine: {fileID: 1581376404}
 --- !u!212 &1025430798
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13005,6 +12935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  dottedLine: {fileID: 1130592073}
 --- !u!65 &1405682457
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14175,6 +14106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  dottedLine: {fileID: 1103744981}
 --- !u!65 &1533672414
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19132,6 +19064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  dottedLine: {fileID: 1082036241}
 --- !u!65 &1659482166
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19990,6 +19923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  dottedLine: {fileID: 1441512520}
 --- !u!65 &1790341297
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21621,6 +21555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  dottedLine: {fileID: 918253217}
 --- !u!65 &2092510664
 BoxCollider:
   m_ObjectHideFlags: 0

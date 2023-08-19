@@ -44,7 +44,6 @@ public class SG_ShotLaserControler : MonoBehaviour
         //Debug.LogFormat("R : {0} / G:{1} / B : {2}", blue.r, blue.g, blue.b);
         //spriteRenderer.material.color = blue;
         Initialization();
-
         switchClass = FindObjectOfType<Switch>();
         switchClass.switchButtionboolChanged += ShotLaserControlerIsButtonOn;
     }
@@ -52,7 +51,7 @@ public class SG_ShotLaserControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnEnable()
