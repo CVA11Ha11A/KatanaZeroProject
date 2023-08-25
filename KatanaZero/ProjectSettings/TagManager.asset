@@ -12,12 +12,22 @@ TagManager:
   - SG_TriggerLaser
   - SG_LaserShot
   - SG_Fan
+  - Bullet
+  - Reflect
+  - PlayerAttack
+  - Stair
+  - Platform
+  - Wall
+  - Boss
+  - Dead
   - Stair
   - Platform
   - PlayerAttack
   - Reflect
   - SG_Bullet
   - SG_PlayerAttack
+  - Door
+  - SG_Doctor
   layers:
   - Default
   - TransparentFX
@@ -25,7 +35,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Wall
   - 
   - 
   - 

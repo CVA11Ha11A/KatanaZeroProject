@@ -1,28 +1,30 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class TutorialPlayerFirstControlScript : MonoBehaviour
 {
     public SG_PlayerMovement movement;
-   
+
     public GameObject leftClickAttack;
     public GameObject playerLight;
     public GameObject enemyLight;
     public GameObject globalLight;
     public GameObject cmVCAM;
-    
+    public GameObject leftClickimg;
+    public GameObject nextStageLight;
+
     public CinemachineVirtualCamera virtualCamera;
 
     public RuntimeAnimatorController newController;
 
     private Animator animator;
 
-    private Coroutine playerStart;   
+    private Coroutine playerStart;
 
     // waitForSecond = 0.25초
     private WaitForSeconds waitForSecond;
@@ -32,7 +34,14 @@ public class TutorialPlayerFirstControlScript : MonoBehaviour
     private Rigidbody2D rigid;
 
     private StateMachineBehaviour stateMachine;
-    
+
+    AudioSource audioSource;
+
+    // [0] = 점프소리(가끔 사용)    [1] = 점프소리(자주사용)    [2] = 구르는소리
+    // [3] = 뛰는소리1             [4] = 뛰는소리2            [5] = 뛰는소리3
+    // 뛰는소리는 3,4,5랜덤하게 재생하면될듯 (Loop 걸어줘야 할수도 있음)
+    [SerializeField] private AudioClip[] audioClip;
+
 
 
     int jumpState = 0;
@@ -53,13 +62,34 @@ public class TutorialPlayerFirstControlScript : MonoBehaviour
     private bool giveScripts = false;
 
 
+    //public event Action<bool> timeScaleReSetEvent; 
+
+    //private bool timeScaleReSet = false;
+
+    //public bool TimeScaleReSet
+    //{
+    //    get { return timeScaleReSet; }
+    //    set
+    //    {
+    //        if (timeScaleReSet != value)
+    //        {
+    //            timeScaleReSet = value;
+    //            timeScaleReSetEvent?.Invoke(timeScaleReSet);
+    //        }
+    //    }
+
+    //}
+
+
+
+
     // Start is called before the first frame update
     public void Awake()
     {
         //stateMachine = GetComponent<StateMachineBehaviour>();
         animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
-
+        audioSource = GetComponent<AudioSource>();
         stateMachine = animator.GetBehaviour<AnimatorPlayerLayerScript>();
 
         waitForSecond = new WaitForSeconds(0.25f);
@@ -80,7 +110,7 @@ public class TutorialPlayerFirstControlScript : MonoBehaviour
         // 실행순서 4
         if (Input.GetMouseButtonDown(0) && Time.timeScale == 0)
         {
-
+            leftClickimg.SetActive(false);
             //Debug.Log("TimeSclae 이 0 이여도 되나?");
             animator.Play("Attack");
             leftClickAttack.SetActive(true);
@@ -88,6 +118,7 @@ public class TutorialPlayerFirstControlScript : MonoBehaviour
             playerLight.SetActive(false);
             enemyLight.SetActive(false);
             globalLight.SetActive(false);
+            nextStageLight.SetActive(true);
             //cmVCAM.SetActive(false);  //좀 더 진행하고 해야함
 
             playerStart = null;
@@ -115,10 +146,14 @@ public class TutorialPlayerFirstControlScript : MonoBehaviour
             nowCutin = 1;
 
             rigid.velocity = Vector3.zero;
+
+            // TODO : 여기 구르는 소리
+            audioSource.clip = audioClip[2];
+            audioSource.Play();
             this.rigid.AddForce(new Vector2(8f, 0f), ForceMode2D.Impulse);
             animator.Play("IsRoll");
 
-            
+
             playerStart = null;
             playerStart = StartCoroutine(Play3());
             //animator.Play("Run");
@@ -142,8 +177,8 @@ public class TutorialPlayerFirstControlScript : MonoBehaviour
             animator.SetTrigger("BendDownTrigger");
             jumpState = 0;
             userGameStart = true;
-
             rigid.gravityScale = 1f;
+           // cmVCAM.SetActive(false);
 
             //this.transform.localScale = Vector3.one;
         }
@@ -223,11 +258,14 @@ public class TutorialPlayerFirstControlScript : MonoBehaviour
         {
             yield return waitForSecond;
         }
+        // TODO : 여기 점프소리
+        audioSource.clip = audioClip[0];
+        audioSource.Play();
 
         rigid.AddForce(new Vector2(6f, 7f), ForceMode2D.Impulse);
         animator.Play("Fall002");
         jumpState = 1;
-        for(int i = 0; i <= 2; i++)
+        for (int i = 0; i <= 2; i++)
         {
             yield return waitForSecond;
         }
@@ -244,13 +282,16 @@ public class TutorialPlayerFirstControlScript : MonoBehaviour
 
         yield return waitForFixedUpdate;
 
-        rigid.AddForce(new Vector2(-4f, 5f), ForceMode2D.Impulse);
+        rigid.AddForce(new Vector2(-4f, 4f), ForceMode2D.Impulse);
+
+        audioSource.clip = audioClip[1];
+        audioSource.Play();
 
         animator.Play("Fall002");
 
         jumpState = 2;
 
-        for(int i = 0; i <= 2; i++)
+        for (int i = 0; i <= 2; i++)
         {
             yield return waitForSecond;
         }
@@ -264,11 +305,11 @@ public class TutorialPlayerFirstControlScript : MonoBehaviour
     {
         if (userGameStart == true && giveScripts == false)
         {
-            Debug.Log("이제 돌려주어도 되나?");
+            //Debug.Log("이제 돌려주어도 되나?");
             // 애니메이터와 스크립트 돌려줘야함
+            audioSource = null;
             ChangeController(newController);
             movement.enabled = true;
-
             // 스크립트와 애니메이터 돌려주고 연속적으로 주지 않기위한 변수
             giveScripts = true;
 

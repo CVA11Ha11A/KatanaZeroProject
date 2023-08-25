@@ -26,7 +26,15 @@ public class Gunner_hotzone : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            PlayerMove playerMove = collision.GetComponent<PlayerMove>();
+            if(playerMove!=null)
+            {
+                if (playerMove.isDie == false)
+                { 
             inRange = true;
+                }
+
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

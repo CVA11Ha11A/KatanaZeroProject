@@ -7,7 +7,7 @@ using UnityEngine;
 public class SG_RedDottedLineControler002 : MonoBehaviour
 {
     public GameObject shotLaser;
-
+    public LaserSound laserSound;
     public GameObject dotted001;
     public GameObject dotted002;
     public GameObject dotted003;
@@ -15,7 +15,7 @@ public class SG_RedDottedLineControler002 : MonoBehaviour
 
     private Switch switchClass;
 
-
+    CameraShake cameraShake;
     private bool redDottedIsButtonSwitch = true;
 
     #region StackOverflow
@@ -43,10 +43,10 @@ public class SG_RedDottedLineControler002 : MonoBehaviour
     private float onOffDotted = 0f;
     private float dottedSpeed = 2f;
     private int dottedcontrolNum = 0;
-    
+    bool isPlayerIn = false;
     void Start()
     {
-       
+        cameraShake = FindAnyObjectByType<CameraShake>();
     }
 
     // Update is called once per frame
@@ -92,11 +92,39 @@ public class SG_RedDottedLineControler002 : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player"))
             {
+                PlayerMove playerMove = collision.GetComponent<PlayerMove>();
+                if (playerMove != null)
+                {
+                    if(isPlayerIn==false)
+                    {
+
+                        isPlayerIn = true;
+                    cameraShake.ShakeCamera();
+                    if (playerMove.isDie == false)
+                    {
+                        laserSound.LaserHitSound();
+                        if (playerMove.isDodge == false)
+                        {
+                            playerMove.Die();
+
+                        }
+                    }
+                    }
+                }
                 this.gameObject.SetActive(false);
          
             }
         }
 
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            isPlayerIn = false;
+            
+
+        }
     }
 
 

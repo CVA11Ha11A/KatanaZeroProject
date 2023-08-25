@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,24 +9,56 @@ public class Bullet : MonoBehaviour
     Vector3 initialPosition;
     bool isReflected = false;
     public bool dieTrigger = false;
-
+    TimeManager timeManager;
+    TrailRenderer trail;
+    AudioSource reflectSound;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * speed;
-
+        timeManager = FindAnyObjectByType<TimeManager>();
+        trail = GetComponent<TrailRenderer>();
         initialPosition = transform.position;
+        reflectSound = GetComponent<AudioSource>();
+    }
+    private void Update()
+    {
+        if (timeManager != null)
+        {
+
+        if(timeManager.isTimeSlow)
+        {
+                if(trail!=null)
+                {
+            trail.enabled = false;
+
+                }
+        }
+        else
+        {
+                if (trail != null)
+                {
+                    trail.enabled = true;
+
+                }
+        }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag.Equals("Wall") || collision.tag.Equals("Floor"))
+        if (collision.tag.Equals("Wall") || collision.tag.Equals("Floor") || collision.tag.Equals("Door") || collision.tag.Equals("Stair"))
         {
             Destroy(gameObject);
         }
         else if (collision.tag.Equals("Reflect") && !isReflected)
         {
+            if(reflectSound!=null)
+            {
+            reflectSound.Play();
+
+            }
             dieTrigger = true;
             ReflectBullet();
         }
@@ -42,6 +74,19 @@ public class Bullet : MonoBehaviour
             if (enemyGunner != null)
             {
                 enemyGunner.Die();
+            }
+            
+        }
+        if(collision.tag.Equals("Player"))
+        {
+            PlayerMove playerMove = collision.GetComponent<PlayerMove>();
+            if(playerMove!=null)
+            {
+                if(playerMove.isDodge==false)
+                {
+
+                playerMove.Die();
+                }
             }
         }
     }

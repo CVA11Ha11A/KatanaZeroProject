@@ -7,7 +7,7 @@ public class EnemyPlatformPass : MonoBehaviour
 {
     public bool isPass;
     private GameObject currentPlatform;
-    [SerializeField] private BoxCollider2D enemyCollider;
+    [SerializeField] private CapsuleCollider2D enemyCollider;
     // Start is called before the first frame update
     void Start()
     {

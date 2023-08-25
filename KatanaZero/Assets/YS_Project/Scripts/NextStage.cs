@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class NextStage : MonoBehaviour
 {
+    int sceneIdx;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +19,14 @@ public class NextStage : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag.Equals("Player"))
-        {
-            SceneManager.LoadScene("Tutorial_Bunker_2");
+        int sceneIdx;
+        if (collision.tag.Equals("Player"))
+        {        
+            if (EnemyCountManager.Instance.isAllClear)
+            {
+                sceneIdx = SceneManager.GetActiveScene().buildIndex;
+                SceneManager.LoadScene(sceneIdx + 1);
+            }
         }
     }
 }

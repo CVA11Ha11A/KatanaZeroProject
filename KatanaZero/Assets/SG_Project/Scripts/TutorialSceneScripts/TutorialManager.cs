@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.TextCore.Text;
+
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -16,14 +16,23 @@ public class TutorialManager : MonoBehaviour
     Color timeBackGroundColor;
     // } LEGACY : 뒷배경
 
+    public GameObject playerClickImg;
     public GameObject backGroundLight;
     public GameObject playerLight;
     public GameObject enemyLight;
     public Light2D globalLight;
 
+
+    public GameObject nextStageLight;
+
+
     Coroutine coroutineBoxing;
     WaitForFixedUpdate waitForFixed;
     WaitForSeconds waitForSeconds;
+
+    private AudioSource audioSource;
+    //  0번째 배열 = 느려지는 소리    1번째 배열 = 띠링 소리
+    [SerializeField] AudioClip[] audioClip;
 
     bool enemyShotEventTime = false;
     bool didTimeScaleEvent = false;
@@ -34,10 +43,17 @@ public class TutorialManager : MonoBehaviour
     
     void Start()
     {
+        nextStageLight.SetActive(false);
+        backGroundLight.SetActive(true);
+
+
         FirstInIt();
         tutorialEnemy.enemyShotEvent += EnemyShotBoolEvent;
         //globalLight = GetComponent<Light2D>();
         globalLight = backGroundLight.GetComponent<Light2D>();
+        audioSource = GetComponent<AudioSource>();
+
+        audioSource.volume = 0.3f;
 
     }
 
@@ -92,18 +108,20 @@ public class TutorialManager : MonoBehaviour
     {
         enemyLight.SetActive(true);
         playerLight.SetActive(true);
-        
+
+        audioSource.clip = audioClip[0];
+        audioSource.Play();
         for(int i = 0; i <= 5; i++)
         {
-            Time.timeScale -= 0.19f;
+            Time.timeScale -= 0.15f;
 
             for(int j =0; j <= 10; j++)
             {
                 timeBackGroundColor = globalLight.color;
 
                 timeBackGroundColor.r = timeBackGroundColor.r - backGroundRgb_A;
-                timeBackGroundColor.g = timeBackGroundColor.r - backGroundRgb_A;
-                timeBackGroundColor.b = timeBackGroundColor.r - backGroundRgb_A;
+                timeBackGroundColor.g = timeBackGroundColor.g - backGroundRgb_A;
+                timeBackGroundColor.b = timeBackGroundColor.b - backGroundRgb_A;
 
                 globalLight.color = timeBackGroundColor;
 
@@ -121,7 +139,9 @@ public class TutorialManager : MonoBehaviour
             
         }
 
-
+        playerClickImg.SetActive(true);
+        audioSource.clip = audioClip[1];
+        audioSource.Play();
         Time.timeScale = 0f;
 
 

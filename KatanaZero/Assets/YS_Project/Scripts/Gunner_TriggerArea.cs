@@ -15,11 +15,24 @@ public class Gunner_TriggerArea : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
+            PlayerMove playerMove = collision.GetComponent<PlayerMove>();
+            if (playerMove != null)
+            {
+                if (playerMove.isDie == false)
+                {
+                    gameObject.SetActive(false);
+                    gunnerParent.target = collision.transform;
+                    gunnerParent.inRange = true;
+                    gunnerParent.hotZone.SetActive(true);
+                }
+                else
+                {
+                    gunnerParent.target = null;
+                    gunnerParent.inRange = false;
+                }
 
-        gameObject.SetActive(false);
-        gunnerParent.target = collision.transform;
-        gunnerParent.inRange = true;
-        gunnerParent.hotZone.SetActive(true);
+            }
+          
         }
     }
 }

@@ -9,6 +9,9 @@ public class TutorialFlyingEnemyScript : MonoBehaviour
     private GameObject bloodClone;
 
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip[] audioClip;
+
     Coroutine enemyStart;
     WaitForSeconds waitForSecond;
 
@@ -19,6 +22,7 @@ public class TutorialFlyingEnemyScript : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         waitForSecond = new WaitForSeconds(0.25f);
         rigid = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
@@ -35,9 +39,11 @@ public class TutorialFlyingEnemyScript : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Floor"))
         {
+            audioSource.clip = audioClip[1];
+            audioSource.Play();
             animator.SetTrigger("DropDieTrigger");
             Destroy(rigid);
-            boxCollider.isTrigger = true;
+            boxCollider.isTrigger = true;          
         }
 
     }
@@ -63,8 +69,10 @@ public class TutorialFlyingEnemyScript : MonoBehaviour
         {
             yield return waitForSecond;
         }
-
+        audioSource.clip = audioClip[0];
+        audioSource.Play();
         this.rigid.AddForce(new Vector2(6f, 2f),ForceMode2D.Impulse);
+
 
         for(int j = 0; j <= 10; j++)
         {

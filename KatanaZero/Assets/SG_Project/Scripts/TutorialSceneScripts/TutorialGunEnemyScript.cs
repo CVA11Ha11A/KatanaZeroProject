@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TutorialGunEnemyScript : MonoBehaviour
@@ -29,6 +30,7 @@ public class TutorialGunEnemyScript : MonoBehaviour
     public GameObject bloodPrefab;
     Coroutine letShot;
     Coroutine bloodCorouTine;
+    Coroutine enemyTextCoroutine;
 
     WaitForFixedUpdate waitForFixedUpdate = default;
     WaitForSeconds waitForSeconds = default;
@@ -37,6 +39,14 @@ public class TutorialGunEnemyScript : MonoBehaviour
     BoxCollider2D boxCollider;
 
     Animator animator;
+    AudioSource audioSource;
+
+
+    public GameObject meetEnemyText;
+    public GameObject meetPlayerText;
+
+    // [0] = 쓰러지는 소리    [1] = 총 맞았을때 날 소리
+    [SerializeField] AudioClip[] audioClip;
 
     private GameObject bloodClone;
 
@@ -53,26 +63,29 @@ public class TutorialGunEnemyScript : MonoBehaviour
 
     void Start()
     {
-        if(waitForFixedUpdate == default || waitForFixedUpdate == null)
+        if (waitForFixedUpdate == default || waitForFixedUpdate == null)
         {
             waitForFixedUpdate = new WaitForFixedUpdate();
         }
-        if(rigid == default || rigid == null)
+        if (rigid == default || rigid == null)
         {
             rigid = GetComponent<Rigidbody2D>();
         }
-        if(boxCollider == default || boxCollider == null)
+        if (boxCollider == default || boxCollider == null)
         {
             boxCollider = GetComponent<BoxCollider2D>();
         }
-        if(animator == default || animator == null)
+        if (animator == default || animator == null)
         {
             animator = GetComponent<Animator>();
         }
-        if(waitForSeconds == default || waitForSeconds == null)
+        if (waitForSeconds == default || waitForSeconds == null)
         {
             waitForSeconds = new WaitForSeconds(0.1f);
         }
+
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
@@ -100,15 +113,24 @@ public class TutorialGunEnemyScript : MonoBehaviour
         {
             letShot = StartCoroutine(StartShot());
         }
-
-        if(collision.gameObject.CompareTag("SG_Bullet"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
+            enemyTextCoroutine = StartCoroutine(MeetEnemyTextStart());
+        }
+
+        if (collision.gameObject.CompareTag("SG_Bullet"))
+        {
+            meetPlayerText.gameObject.SetActive(false);
+
             // 동작은 뒤로 날아가는게 맞음
-            if(this.gameObject.transform.position.x < collision.gameObject.transform.position.x)
-            {
+            if (this.gameObject.transform.position.x < collision.gameObject.transform.position.x)
+            {                
+                audioSource.clip = audioClip[1];
+                audioSource.Play();
+
                 isDead = true;
                 // 뒤로 날아감
-                rigid.AddForce(new Vector2(-13f, 5f),ForceMode2D.Impulse);
+                rigid.AddForce(new Vector2(-13f, 5f), ForceMode2D.Impulse);
                 rigid.gravityScale = 1f;
                 boxCollider.isTrigger = false;
                 animator.SetTrigger("EnemyDieTrigger");
@@ -116,12 +138,20 @@ public class TutorialGunEnemyScript : MonoBehaviour
             }
             else if (this.gameObject.transform.position.x > collision.gameObject.transform.position.x)
             {
+                audioSource.clip = audioClip[1];
+                audioSource.Play();
+
                 isDead = true;
                 // 앞로 날아감
-                rigid.AddForce(new Vector2(13f, 5f),ForceMode2D.Impulse);
+                rigid.AddForce(new Vector2(13f, 5f), ForceMode2D.Impulse);
                 rigid.gravityScale = 1f;
                 boxCollider.isTrigger = false;
                 animator.SetTrigger("EnemyDieTrigger");
+            }
+            if (isDead == true)
+            {
+                audioSource.clip = audioClip[0];
+                audioSource.Play();
             }
         }
     }
@@ -129,13 +159,12 @@ public class TutorialGunEnemyScript : MonoBehaviour
 
     private IEnumerator StartShot()
     {
-
+        meetPlayerText.gameObject.SetActive(true);
         //  waitForFixed는 5번 돌아야 0.1초
-        for(int i =0; i <= 53; i++)
-        { 
+        for (int i = 0; i <= 53; i++)
+        {
             yield return waitForFixedUpdate;
         }
-
         bulletMaker.gameObject.SetActive(true);
 
         IsShot = true;
@@ -150,6 +179,16 @@ public class TutorialGunEnemyScript : MonoBehaviour
             bloodClone = Instantiate(bloodPrefab, this.transform);
             yield return waitForSeconds;
         }
-
     }
+
+    private IEnumerator MeetEnemyTextStart()
+    {
+        meetEnemyText.gameObject.SetActive(true);
+        for (int i = 0; i <= 5; i++)
+        {
+            yield return waitForSeconds;
+        }
+        meetEnemyText.gameObject.SetActive(false);
+    }
+
 }

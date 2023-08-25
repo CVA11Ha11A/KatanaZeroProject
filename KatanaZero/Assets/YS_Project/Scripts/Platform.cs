@@ -7,7 +7,7 @@ public class Platform : MonoBehaviour
 {
     Player player;
     private GameObject currentPlatform;
-    [SerializeField] private BoxCollider2D playerCollider;
+    [SerializeField] private CapsuleCollider2D playerCollider;
     // Start is called before the first frame update
     void Start()
     {

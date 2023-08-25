@@ -64,7 +64,7 @@ public class SG_PlayerOneWayCollider : MonoBehaviour
 
     private void InputMethod()
     {
-        if (player.GetButtonDown("DownKey") && leftKey == false && rightKey == false)
+        if (player.GetButtonDown("Down") && leftKey == false && rightKey == false)
         {
             if (oneWayPlatFormObj != null)
             {

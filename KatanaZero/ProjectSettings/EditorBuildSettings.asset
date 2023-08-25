@@ -15,6 +15,15 @@ EditorBuildSettings:
     path: Assets/YS_Project/Scenes/Tutorial_Bunker.unity
     guid: b3c132400d1671d47bc7afe87e0e5d3a
   - enabled: 1
-    path: Assets/YS_Project/Scenes/Tutorial_Bunker_2.unity
-    guid: 6faa62bf6c4865b4ba7ffce350cd361d
+    path: Assets/SG_Project/Scene/LaserPassage.unity
+    guid: cba999938d3f888409c0fcefc3356eb1
+  - enabled: 1
+    path: Assets/SG_Project/Scene/SG_LaserPassage002.unity
+    guid: beef87fd3083c5841ae376b277982a8a
+  - enabled: 1
+    path: Assets/SG_Project/Scene/SG_DoctorMap004.unity
+    guid: 950ec16c88fba394386d75075556fd2c
+  - enabled: 1
+    path: Assets/YS_Project/Scenes/BossScene.unity
+    guid: ce200203b816a5443bc311ae76a65535
   m_configObjects: {}

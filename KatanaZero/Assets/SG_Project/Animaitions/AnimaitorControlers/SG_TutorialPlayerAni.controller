@@ -135,13 +135,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -5945334552355989352}
-    m_Position: {x: -20, y: 290, z: 0}
+    m_Position: {x: 130, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4584548828228539051}
     m_Position: {x: 430, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1625223335886602496}
-    m_Position: {x: -20, y: 410, z: 0}
+    m_Position: {x: 130, y: 420, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -947314101489591100}
     m_Position: {x: 430, y: 530, z: 0}
@@ -167,7 +167,7 @@ AnimatorStateMachine:
   m_StateMachineBehaviours:
   - {fileID: 5258158197354670981}
   m_AnyStatePosition: {x: 400, y: 80, z: 0}
-  m_EntryPosition: {x: 0, y: 190, z: 0}
+  m_EntryPosition: {x: 150, y: 200, z: 0}
   m_ExitPosition: {x: 450, y: 420, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -5945334552355989352}
@@ -311,37 +311,37 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: ExitFall
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: EnterFall
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: FallBool
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: CreepUpTrigger
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: BendDownTrigger
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer

@@ -99,7 +99,7 @@ public class SG_MoveRedLaser : MonoBehaviour
     {
         laserIsSwitchBottonOn = buttonSwitch;
 
-        Debug.Log("buttonSwitch 변화해서 불러왔나?");
+        //Debug.Log("buttonSwitch 변화해서 불러왔나?");
     }
 
     // 첫 선언 모음

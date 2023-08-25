@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class EnemyRay : MonoBehaviour
 {
-  //  public Transform rayCast;
+    public  enum EnemyState
+    {
+        Idle,Patrol,Chase
+    }
+    //  public Transform rayCast;
     //public LayerMask rayCastMask;
+    public GameObject[] bloodPrefabs;
+   
     public float rayCastLength;
     public float attackDistance;
     public float moveSpeed;
@@ -16,6 +22,7 @@ public class EnemyRay : MonoBehaviour
     [HideInInspector]public bool inRange;
     public GameObject hotZone;
     public GameObject triggerArea;
+    public EnemyState state;
     //private RaycastHit2D hit;
     private Animator anim;
     private float distance;
@@ -24,29 +31,40 @@ public class EnemyRay : MonoBehaviour
     private float intTimer;
     private bool onPlatform;
     private bool onStair;
-    private bool isDie=false;
+    public bool isDie=false;
     private bool isGrounded;
     EnemyPlatformPass platformPass;
     Rigidbody2D enemyRigid;
-    BoxCollider2D enemyCollider;
-
+    CapsuleCollider2D enemyCollider;
+    Vector3 initPosition;
+    PlayerMove playerMove;
+    TimeBody timeBody;
+    CameraShake cameraShake;
+    AudioSource hitSound;
     // Start is called before the first frame update
     void Awake()
     {
         SelecTarget();
-
+        initPosition = transform.position;
         intTimer = timer;
+        hitSound = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         platformPass = GetComponent<EnemyPlatformPass>();
         enemyRigid = GetComponent<Rigidbody2D>();
-        enemyCollider = GetComponent<BoxCollider2D>();
-
-
+        enemyCollider = GetComponent<CapsuleCollider2D>();
+        playerMove = FindAnyObjectByType<PlayerMove>();
+        timeBody = GetComponent<TimeBody>();
+        cameraShake = FindAnyObjectByType<CameraShake>();
     }
 
     // Update is called once per frame
     void Update()
     {
+      
+        if(timeBody.isRewindin)
+        {
+            return;
+        }
         if(isDie)
         {
             return;
@@ -141,6 +159,10 @@ public class EnemyRay : MonoBehaviour
         {
             isGrounded = true;
         }
+        if(collision.collider.CompareTag("Player")||collision.collider.CompareTag("Enemy"))
+        {
+            Physics2D.IgnoreCollision(enemyCollider, collision.collider);
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -160,6 +182,15 @@ public class EnemyRay : MonoBehaviour
 
     void EnemyLogic()
     {
+        if(playerMove!=null)
+        {
+
+        if(playerMove.isDie)
+        {
+            StopAttack();
+            return;
+        }
+        }
         distance = Vector2.Distance(transform.position, target.position);
         if(distance>attackDistance)
         {
@@ -176,6 +207,9 @@ public class EnemyRay : MonoBehaviour
     }
     void Move()
     {
+        if(target!=null)
+        {
+
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Grunt_attack")&&target.gameObject.tag!="Player")
         {
             anim.SetBool("Run", false);
@@ -196,6 +230,17 @@ public class EnemyRay : MonoBehaviour
             //transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
             enemyRigid.velocity = new Vector2(moveDirection.x * (moveSpeed*2), enemyRigid.velocity.y);
         }
+        }
+        
+
+
+    }
+    public void Init()
+    {
+        isDie = false;
+        inRange = false;
+        target = null;
+        SelecTarget();
 
     }
     void Attack()
@@ -233,6 +278,9 @@ public class EnemyRay : MonoBehaviour
     }
     public void SelecTarget()
     {
+        if (state == EnemyState.Patrol)
+        {
+
         float distanceToLeft = Vector2.Distance(transform.position, leftLimit.position);
         float distanceToRight = Vector2.Distance(transform.position, rightLimit.position);
         if(distanceToLeft>distanceToRight)
@@ -244,6 +292,7 @@ public class EnemyRay : MonoBehaviour
             target = rightLimit;
         }
         Flip();
+        }
     }
    public void Flip()
     {
@@ -265,19 +314,22 @@ public class EnemyRay : MonoBehaviour
 
     public void Die()
     {
+        int randomIdx = Random.Range(0, 3);  
+            GameObject blood = Instantiate(bloodPrefabs[randomIdx], transform.position, transform.rotation);
+        hitSound.Play();
+      
+        cameraShake.ShakeCamera();
         anim.Play("Grunt_Die_Ground");
         isDie = true;
-        if(isGrounded)
-        {
-        StartCoroutine(DieRoutine());
+        EnemyCountManager.Instance.currentCount += 1;
 
-        }
+       
     }
     private IEnumerator DieRoutine()
     {
         yield return new WaitForSeconds(1.5f);
         enemyRigid.velocity = Vector3.zero;
         enemyRigid.gravityScale = 0;
-        enemyCollider.enabled = false;
+        
     }
 }

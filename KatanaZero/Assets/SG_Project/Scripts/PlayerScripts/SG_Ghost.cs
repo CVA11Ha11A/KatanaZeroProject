@@ -12,7 +12,7 @@ public class SG_Ghost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isGhostMake = true;
+        //isGhostMake = true;
         ghostDelaySeconds = ghostDelay;
     }
 

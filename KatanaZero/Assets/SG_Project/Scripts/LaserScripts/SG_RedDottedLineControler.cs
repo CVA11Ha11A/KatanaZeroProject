@@ -15,7 +15,8 @@ public class SG_RedDottedLineControler : MonoBehaviour
 
     private Switch switchClass;
 
-
+    public LaserSound laserSound;
+    private CameraShake cameraShake;
     private bool redDottedIsButtonSwitch = true;
 
     #region StackOverflow
@@ -43,10 +44,12 @@ public class SG_RedDottedLineControler : MonoBehaviour
     private float onOffDotted = 0f;
     private float dottedSpeed = 2f;
     private int dottedcontrolNum = 0;
-    
+    bool isPlayerIn=false;
+
     void Start()
     {
-        switchClass = FindAnyObjectByType<Switch>();      
+        cameraShake = FindAnyObjectByType<CameraShake>();
+        switchClass = FindAnyObjectByType<Switch>();
 
         switchClass.switchButtionboolChanged += RedDotteLineIsSwitchOn;
     }
@@ -81,9 +84,8 @@ public class SG_RedDottedLineControler : MonoBehaviour
     {
         // SetActive == flase 될 때 수행할 작업
         if (redDottedIsButtonSwitch == true)
-        { 
+        {
             shotLaser.gameObject.SetActive(true);
-
         }
     }
 
@@ -96,9 +98,35 @@ public class SG_RedDottedLineControler : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                this.gameObject.SetActive(false);
-         
+                if(isPlayerIn==false)
+                {
+                    isPlayerIn = true;
+                PlayerMove playerMove = collision.GetComponent<PlayerMove>();
+                if (playerMove != null)
+                {
+                    cameraShake.ShakeCamera();
+                    if (playerMove.isDie == false)
+                    {
+                        laserSound.LaserHitSound();
+                        if (playerMove.isDodge == false)
+                        {
+                            playerMove.Die();
+
+                        }
+                    }
+                }
+                gameObject.SetActive(false);
+                }
+
             }
+        }
+
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+            if (collision.gameObject.CompareTag("Player"))
+        {
+            isPlayerIn = false;
         }
 
     }

@@ -9,6 +9,7 @@ public class SG_LaserSwitch : MonoBehaviour
     SG_RedDottedLineControler redDottedLineClass;
     public GameObject laserLine;
 
+
     //public event Action<bool> IsAttackingEvent;
     
 
@@ -41,7 +42,8 @@ public class SG_LaserSwitch : MonoBehaviour
     void Start()
     {
         switchClass = FindObjectOfType<Switch>();
-     
+
+
 
         switchClass.switchButtionboolChanged += IsChangedBool;
         //Debug.LogFormat("Class가 잘 들어갔는지 -> {0}", switchClass);
@@ -50,7 +52,7 @@ public class SG_LaserSwitch : MonoBehaviour
     
     void Update()
     {
-        ChildObjControl();       
+        ChildObjControl();
     }
 
     public void LateUpdate()
